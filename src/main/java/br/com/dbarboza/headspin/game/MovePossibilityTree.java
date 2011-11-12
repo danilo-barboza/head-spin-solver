@@ -15,11 +15,8 @@ public class MovePossibilityTree {
 	public MovePossibilityTree(int possibleMoves) {
 		possibleSolutions = new ArrayList<PossibleSolution>();
 		root = new Node();
-		for (int i = 0; i < possibleMoves; i++) {
+		for (int i = 0; i < possibleMoves; i++) 
 			root.addLevel();
-			System.out.println("Total children in level " + i + ": "
-					+ root.totalChildren());
-		}
 	}
 
 	public List<List<Move>> possibleSolutions() {
