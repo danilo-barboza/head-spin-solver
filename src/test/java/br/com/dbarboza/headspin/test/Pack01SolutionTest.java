@@ -12,9 +12,9 @@ import static br.com.dbarboza.headspin.model.DeadRabbitHead.Side.*;
 
 import static org.junit.Assert.*;
 
-public class Pack1SolutionTest {
+public class Pack01SolutionTest {
 
-	private final int possibleMoves = 1;
+	private static final int POSSIBLE_MOVES = 1;
 
 	@Test
 	public void solveLevel1() {
@@ -23,12 +23,12 @@ public class Pack1SolutionTest {
 		DeadRabbitHead leftLowerHead = new DeadRabbitHead(DOWN, FRONT);
 		DeadRabbitHead leftUpperHead = new DeadRabbitHead(DOWN, FRONT);
 
-		Game game = new Game(leftUpperHead, rightUpperHead, rightLowerHead,
-				leftLowerHead, possibleMoves);
+		Game game = new Game(leftUpperHead, rightUpperHead, leftLowerHead,
+				rightLowerHead, POSSIBLE_MOVES);
 
 		List<Move> solution = game.solve();
-
 		assertEquals(1, solution.size());
+
 		assertEquals(Move.LEFT_COLUMN_UP, solution.get(0));
 	}
 
@@ -39,8 +39,8 @@ public class Pack1SolutionTest {
 		DeadRabbitHead rightLowerHead = new DeadRabbitHead(RIGHT, UP);
 		DeadRabbitHead leftLowerHead = new DeadRabbitHead(RIGHT, UP);
 
-		Game game = new Game(rightUpperHead, leftUpperHead, rightLowerHead,
-				leftLowerHead, possibleMoves);
+		Game game = new Game(rightUpperHead, leftUpperHead, leftLowerHead,
+				rightLowerHead, POSSIBLE_MOVES);
 
 		List<Move> solution = game.solve();
 

@@ -21,7 +21,7 @@ public class Game {
 	private int possibleMoves;
 
 	public Game(DeadRabbitHead leftUpperHead, DeadRabbitHead rightUpperHead,
-			DeadRabbitHead rightLowerHead, DeadRabbitHead leftLowerHead,
+			DeadRabbitHead leftLowerHead, DeadRabbitHead rightLowerHead,
 			int possibleMoves) {
 		leftUpperHeadInitial = leftUpperHead;
 		rightUpperHeadInitial = rightUpperHead;
@@ -121,7 +121,7 @@ public class Game {
 		MovePossibilityTree tree = new MovePossibilityTree(possibleMoves);
 
 		for (List<Move> possibleSolution : tree.possibleSolutions()) {
-			
+
 			for (Move move : possibleSolution)
 				move(move);
 
