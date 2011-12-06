@@ -1,4 +1,4 @@
-package br.com.dbarboza.headspin.test;
+package br.com.dbarboza.headspin.test.packs;
 
 import static br.com.dbarboza.headspin.model.DeadRabbitHead.Side.*;
 import static org.junit.Assert.*;

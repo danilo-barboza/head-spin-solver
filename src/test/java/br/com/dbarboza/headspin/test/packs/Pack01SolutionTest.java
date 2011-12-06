@@ -1,4 +1,4 @@
-package br.com.dbarboza.headspin.test;
+package br.com.dbarboza.headspin.test.packs;
 
 import java.util.List;
 
