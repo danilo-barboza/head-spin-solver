@@ -1,6 +1,6 @@
 package br.com.dbarboza.headspin.game;
 
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import br.com.dbarboza.headspin.game.exception.UnsovableGameException;
@@ -116,27 +116,26 @@ public class Game {
 	}
 
 	public List<Move> solve() throws UnsovableGameException {
-		List<Move> solution = new ArrayList<Move>(possibleMoves);
-
 		MovePossibilityTree tree = new MovePossibilityTree(possibleMoves);
 
-		for (List<Move> possibleSolution : tree.possibleSolutions()) {
+		return tree.scan(new SolutionTester() {
+			@Override
+			public boolean testPossibleSolution(List<Move> possibleSolution) {
+				for (Move move : possibleSolution)
+					move(move);
 
-			for (Move move : possibleSolution)
-				move(move);
+				if (areAllRabbitsAtWinnerPosition()) {
+					return true;
+				}
 
-			if (areAllRabbitsAtWinnerPosition()) {
-				solution = possibleSolution;
-				break;
+				reset();
+				return false;
 			}
-
-			reset();
-		}
-
-		if (solution.isEmpty())
-			throw new UnsovableGameException();
-
-		return solution;
+		});
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new DecimalFormat().format(Math.pow(8, 10)));
 	}
 
 }

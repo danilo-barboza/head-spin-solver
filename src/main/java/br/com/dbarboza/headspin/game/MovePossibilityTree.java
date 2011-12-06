@@ -5,29 +5,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.com.dbarboza.headspin.game.Game.Move;
+import br.com.dbarboza.headspin.game.exception.UnsovableGameException;
 
 public class MovePossibilityTree {
 
-	private Node root;
+	/**
+	 * @author danilo
+	 * 
+	 */
+	public class SolutionFoundException extends RuntimeException {
 
-	private List<PossibleSolution> possibleSolutions;
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
-	public MovePossibilityTree(int possibleMoves) {
-		possibleSolutions = new ArrayList<PossibleSolution>();
-		root = new Node();
-		for (int i = 0; i < possibleMoves; i++) 
-			root.addLevel();
 	}
 
-	public List<List<Move>> possibleSolutions() {
-		root.possibleSolutions();
-		List<List<Move>> result = new ArrayList<List<Move>>(
-				possibleSolutions.size());
+	private Node root;
+	private SolutionTester solutionTester;
+	private PossibleSolution solution;
 
-		for (PossibleSolution possibleSolution : possibleSolutions)
-			result.add(possibleSolution.solution);
-
-		return result;
+	public MovePossibilityTree(int possibleMoves) {
+		root = new Node();
+		for (int i = 0; i < possibleMoves; i++) {
+			root.addLevel();
+		}
 	}
 
 	public int numberOfPossibleSolutions() {
@@ -54,7 +57,7 @@ public class MovePossibilityTree {
 
 		public void addLevel() {
 			if (isLeaf())
-				for (Move move : Move.values()) 
+				for (Move move : Move.values())
 					children.add(new Node(this, move));
 			else
 				for (Node child : children)
@@ -73,13 +76,25 @@ public class MovePossibilityTree {
 
 		}
 
-		public void possibleSolutions() {
+		public void scan() {
 
-			if (isLeaf())
-				possibleSolutions.add(new PossibleSolution(this));
-			else
-				for (Node child : children)
-					child.possibleSolutions();
+			if (isLeaf()) {
+				PossibleSolution possibleSolution = new PossibleSolution(this);
+				if (solutionTester
+						.testPossibleSolution(possibleSolution.solution)) {
+					solution = possibleSolution;
+					throw new SolutionFoundException();
+				}
+
+			} else {
+				for (Node child : children) {
+					try {
+						child.scan();
+					} catch (SolutionFoundException e) {
+						break;
+					}
+				}
+			}
 
 		}
 
@@ -108,6 +123,21 @@ public class MovePossibilityTree {
 			return solution.toString();
 		}
 
+	}
+
+	/**
+	 * @param solutionTester
+	 * @return
+	 */
+	public List<Move> scan(SolutionTester solutionTester) {
+		this.solutionTester = solutionTester;
+
+		root.scan();
+
+		if (solution == null)
+			throw new UnsovableGameException();
+
+		return solution.solution;
 	}
 
 }
