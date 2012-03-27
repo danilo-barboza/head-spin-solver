@@ -95,19 +95,19 @@ public class Pack04SolutionTest {
 
 		System.out.println(solution);
 	}
-	
+
 	@Test
 	public void solveLevel13() {
 		DeadRabbitHead leftUpperHead = new DeadRabbitHead(LEFT, BACK);
 		DeadRabbitHead rightUpperHead = new DeadRabbitHead(LEFT, UP);
 		DeadRabbitHead leftLowerHead = new DeadRabbitHead(FRONT, RIGHT);
 		DeadRabbitHead rightLowerHead = new DeadRabbitHead(FRONT, UP);
-		
+
 		Game game = new Game(leftUpperHead, rightUpperHead, leftLowerHead,
 				rightLowerHead, POSSIBLE_MOVES);
-		
+
 		List<Move> solution = game.solve();
-		
+
 		System.out.println(solution);
 	}
 
@@ -125,20 +125,40 @@ public class Pack04SolutionTest {
 
 		System.out.println(solution);
 	}
-	
+
 	@Test
 	public void solveLevel19() {
 		DeadRabbitHead leftUpperHead = new DeadRabbitHead(LEFT, DOWN);
 		DeadRabbitHead rightUpperHead = new DeadRabbitHead(RIGHT, UP);
 		DeadRabbitHead leftLowerHead = new DeadRabbitHead(LEFT, DOWN);
 		DeadRabbitHead rightLowerHead = new DeadRabbitHead(LEFT, UP);
-		
+
 		Game game = new Game(leftUpperHead, rightUpperHead, leftLowerHead,
 				rightLowerHead, POSSIBLE_MOVES);
-		
+
 		List<Move> solution = game.solve();
-		
+
 		System.out.println(solution);
+	}
+
+	public void solveLevel42() {
+		DeadRabbitHead leftUpperHead = new DeadRabbitHead(FRONT, DOWN);
+		DeadRabbitHead rightUpperHead = new DeadRabbitHead(UP, FRONT);
+		DeadRabbitHead leftLowerHead = new DeadRabbitHead(LEFT, DOWN);
+		DeadRabbitHead rightLowerHead = new DeadRabbitHead(UP, LEFT);
+
+		Game game = new Game(leftUpperHead, rightUpperHead, leftLowerHead,
+				rightLowerHead, 10);
+
+		List<Move> solution = game.solve();
+
+		System.out.println(solution);
+
+	}
+
+	public static void main(String[] args) {
+		Pack04SolutionTest test = new Pack04SolutionTest();
+		test.solveLevel42();
 	}
 
 }

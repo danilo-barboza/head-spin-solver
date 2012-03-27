@@ -1,6 +1,5 @@
 package br.com.dbarboza.headspin.game;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import br.com.dbarboza.headspin.game.exception.UnsovableGameException;
@@ -10,6 +9,33 @@ public class Game {
 
 	public enum Move {
 		UPPER_LINE_RIGHT, UPPER_LINE_LEFT, RIGHT_COLUMN_DOWN, RIGHT_COLUMN_UP, LOWER_LINE_LEFT, LOWER_LINE_RIGHT, LEFT_COLUMN_UP, LEFT_COLUMN_DOWN;
+
+		/**
+		 * @param move
+		 * @return
+		 */
+		public boolean cancels(Move move) {
+			switch (this) {
+			case UPPER_LINE_LEFT:
+				return UPPER_LINE_RIGHT.equals(move);
+			case UPPER_LINE_RIGHT:
+				return UPPER_LINE_LEFT.equals(move);
+			case RIGHT_COLUMN_DOWN:
+				return RIGHT_COLUMN_UP.equals(move);
+			case RIGHT_COLUMN_UP:
+				return RIGHT_COLUMN_DOWN.equals(move);
+			case LOWER_LINE_LEFT:
+				return LOWER_LINE_RIGHT.equals(move);
+			case LOWER_LINE_RIGHT:
+				return LOWER_LINE_LEFT.equals(move);
+			case LEFT_COLUMN_DOWN:
+				return LEFT_COLUMN_UP.equals(move);
+			case LEFT_COLUMN_UP:
+				return LEFT_COLUMN_DOWN.equals(move);
+			}
+
+			return false;
+		}
 	}
 
 	private DeadRabbitHead leftUpperHead, rightUpperHead, rightLowerHead,
@@ -121,8 +147,9 @@ public class Game {
 		return tree.scan(new SolutionTester() {
 			@Override
 			public boolean testPossibleSolution(List<Move> possibleSolution) {
-				for (Move move : possibleSolution)
+				for (Move move : possibleSolution) {
 					move(move);
+				}
 
 				if (areAllRabbitsAtWinnerPosition()) {
 					return true;
@@ -132,10 +159,6 @@ public class Game {
 				return false;
 			}
 		});
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(new DecimalFormat().format(Math.pow(8, 10)));
 	}
 
 }

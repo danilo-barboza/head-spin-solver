@@ -1,6 +1,5 @@
 package br.com.dbarboza.headspin.game;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,103 +23,89 @@ public class MovePossibilityTree {
 
 	private Node root;
 	private SolutionTester solutionTester;
-	private PossibleSolution solution;
+	private List<Move> solution;
+	private int possibleMoves;
 
 	public MovePossibilityTree(int possibleMoves) {
 		root = new Node();
-		for (int i = 0; i < possibleMoves; i++) {
-			root.addLevel();
-		}
+		this.possibleMoves = possibleMoves;
 	}
 
 	public int numberOfPossibleSolutions() {
-		return root.totalChildren();
+		return (int) Math.pow(Move.values().length, possibleMoves);
 	}
 
 	private class Node {
-
-		private List<Node> children;
 
 		private Move value;
 
 		private Node parent;
 
+		private int level;
+
 		public Node() {
-			children = new ArrayList<Node>();
+			level = 0;
 		}
 
 		public Node(Node parent, Move value) {
 			this();
 			this.parent = parent;
 			this.value = value;
-		}
 
-		public void addLevel() {
-			if (isLeaf())
-				for (Move move : Move.values())
-					children.add(new Node(this, move));
-			else
-				for (Node child : children)
-					child.addLevel();
-		}
+			Node node = this;
 
-		public int totalChildren() {
-			int result = 0;
-			if (isLeaf())
-				return 1;
-			else {
-				for (Node child : children)
-					result += child.totalChildren();
-				return result;
+			while (node.parent != null) {
+				level += 1;
+				node = node.parent;
 			}
-
 		}
 
 		public void scan() {
 
 			if (isLeaf()) {
-				PossibleSolution possibleSolution = new PossibleSolution(this);
-				if (solutionTester
-						.testPossibleSolution(possibleSolution.solution)) {
+				List<Move> possibleSolution = possibleSolution();
+				if (solutionTester.testPossibleSolution(possibleSolution)) {
 					solution = possibleSolution;
 					throw new SolutionFoundException();
 				}
 
 			} else {
-				for (Node child : children) {
+
+				for (Move move : Move.values()) {
+					if (move.cancels(value))
+						continue;
+
+					Node child = new Node(this, move);
 					try {
 						child.scan();
 					} catch (SolutionFoundException e) {
 						break;
 					}
 				}
+
 			}
 
 		}
 
-		private boolean isLeaf() {
-			return children.isEmpty();
-		}
-	}
-
-	private class PossibleSolution {
-
-		private List<Move> solution;
-
-		protected PossibleSolution(Node leaf) {
+		/**
+		 * Navigates up the tree storing the possible solution of this leaf
+		 * 
+		 * @return
+		 */
+		private List<Move> possibleSolution() {
 			LinkedList<Move> moves = new LinkedList<Move>();
+			Node leaf = this;
 
 			while (leaf.parent != null) {
 				moves.push(leaf.value);
 				leaf = leaf.parent;
 			}
 
-			solution = moves;
+			return moves;
 		}
 
-		@Override
-		public String toString() {
-			return solution.toString();
+		private boolean isLeaf() {
+			return level == possibleMoves;
 		}
 
 	}
@@ -137,7 +122,7 @@ public class MovePossibilityTree {
 		if (solution == null)
 			throw new UnsovableGameException();
 
-		return solution.solution;
+		return solution;
 	}
 
 }

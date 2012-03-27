@@ -44,8 +44,8 @@ public class DeadRabbitHead implements Cloneable {
 	private Position earPosition;
 
 	public DeadRabbitHead(Side facePosition, Side earPosition) {
-		this.facePosition = this.new Position(facePosition);
-		this.earPosition = this.new Position(earPosition);
+		this.facePosition = new Position(facePosition);
+		this.earPosition = new Position(earPosition);
 
 		validate();
 	}
@@ -170,7 +170,7 @@ public class DeadRabbitHead implements Cloneable {
 
 	}
 
-	private class Position implements Cloneable {
+	private static class Position implements Cloneable {
 
 		private Side side;
 

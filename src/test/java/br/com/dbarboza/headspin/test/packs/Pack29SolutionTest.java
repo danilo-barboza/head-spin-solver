@@ -15,18 +15,18 @@ import br.com.dbarboza.headspin.model.DeadRabbitHead;
 
 /**
  * @author danilo
- * 
+ *
  */
-public class Pack17SolutionTest {
-
-	private static final int POSSIBLE_MOVES = 7;
+public class Pack29SolutionTest {
+	
+	private static final int POSSIBLE_MOVES = 10;
 
 	@Test
-	public void solveLevel1() {
-		DeadRabbitHead leftUpperHead = new DeadRabbitHead(FRONT, DOWN);
-		DeadRabbitHead rightUpperHead = new DeadRabbitHead(FRONT, DOWN);
-		DeadRabbitHead leftLowerHead = new DeadRabbitHead(RIGHT, DOWN);
-		DeadRabbitHead rightLowerHead = new DeadRabbitHead(RIGHT, DOWN);
+	public void solveLevel3() {
+		DeadRabbitHead leftUpperHead = new DeadRabbitHead(FRONT, LEFT);
+		DeadRabbitHead rightUpperHead = new DeadRabbitHead(DOWN, RIGHT);
+		DeadRabbitHead leftLowerHead = new DeadRabbitHead(LEFT, BACK);
+		DeadRabbitHead rightLowerHead = new DeadRabbitHead(BACK, RIGHT);
 
 		Game game = new Game(leftUpperHead, rightUpperHead, leftLowerHead,
 				rightLowerHead, POSSIBLE_MOVES);
