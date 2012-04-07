@@ -17,7 +17,8 @@ import br.com.dbarboza.headspin.model.DeadRabbitHead.Side;
  */
 public class SideTranslator {
 
-	private static Map<String, String> PROPS = new HashMap<String, String>(6);
+	private static Map<String, String> PROPS = new HashMap<String, String>(
+			Side.values().length);
 
 	static {
 		PROPS.put("UP", "CIMA");

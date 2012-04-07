@@ -8,11 +8,17 @@
 	<packaging>jar</packaging>
 
 	<name>dead-rabbit-solver</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>dan-release</id>
+			<url>http://danrepo.jelastic.servint.net/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>

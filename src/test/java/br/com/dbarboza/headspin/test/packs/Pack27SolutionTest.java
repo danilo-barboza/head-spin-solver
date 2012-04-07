@@ -7,6 +7,7 @@ import static br.com.dbarboza.headspin.model.DeadRabbitHead.Side.*;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.dbarboza.headspin.game.Game;
@@ -21,6 +22,7 @@ public class Pack27SolutionTest {
 	
 	private static final int POSSIBLE_MOVES = 9;
 
+	@Ignore
 	@Test
 	public void solveLevel1() {
 		DeadRabbitHead leftUpperHead = new DeadRabbitHead(DOWN, FRONT);
