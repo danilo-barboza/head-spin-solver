@@ -4,8 +4,14 @@
 
 	<groupId>br.com.danilo.headspin</groupId>
 	<artifactId>dead-rabbit-solver</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+
+	<scm>
+		<connection>scm:git:git://github.com/danilo-barboza/head-spin-solver.git</connection>
+		<developerConnection>scm:git:git@github.com:danilo-barboza/head-spin-solver.git</developerConnection>
+		<url>git://github.com/danilo-barboza/head-spin-solver.git</url>
+	</scm>
 
 	<name>dead-rabbit-solver</name>
 
